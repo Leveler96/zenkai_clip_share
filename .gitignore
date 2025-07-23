@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.env
+.idea/  # PyCharm project files (optional, but often good to ignore if others use different IDEs)
+
+# Django specific
+db.sqlite3
+/media/  # Directory for user-uploaded media (video clips, profile pics)
+/static_collected/ # Directory for collected static files in production
+*.log
+local_settings.py # If you create a local settings file for sensitive info
