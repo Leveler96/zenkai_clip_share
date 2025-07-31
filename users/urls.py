@@ -5,4 +5,5 @@ from . import views
 # this is where app-specific URLs go
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('register/', views.register, name='register'),
 ]
