@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users'
+    'users',
+    'clips', 
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'dashboard' # Redirects to the 'dashboard' URL name after login
 
 LOGIN_URL = 'login'
+
+MEDIA_ROOT = BASE_DIR / 'media'  # path to media directory, sets the default location where media is saved
+MEDIA_URL = '/media/'

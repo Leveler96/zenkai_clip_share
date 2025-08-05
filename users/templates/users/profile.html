@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>{{user.username}}'s Profile</title>
+</head>
+<body>
+    <h2>{{user.username}}'s Profile</h2>
+    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" width="150" height="150">
+    <p>Bio: {{ user.profile.bio }}</p>
+
+    <h3>Update Profile</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+            <legend>User Info</legend>
+            {{ u_form.as_p }}
+        </fieldset>
+        <fieldset>
+            <legend>Profile Info</legend>
+            {{ p_form.as_p }}
+        </fieldset>
+        <button type="submit">Update</button>
+    </form>
+
+    <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+    <p><a href="{% url 'logout' %}">Logout</a></p>
+
+
+</body>
+</html>>

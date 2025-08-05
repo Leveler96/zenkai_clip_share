@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clip List</title>
+</head>
+<body>
+    <h1>Recent Clips</h1>
+    <hr>
+
+    {% for clip in clips %}
+        <article>
+            <h2>{{ clip.title }}</h2>
+            <p>Uploader: {{ clip.uploader.username }}</p>
+            <p>Date: {{ clip.date_uploaded }}</p>
+            <p>{{ clip.description }}</p>
+            <video controls width="500">
+                <source src="{{ clip.video_file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <br><br>
+        </article>
+    {% endfor %}
+</body>
+</html>
