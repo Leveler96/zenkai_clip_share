@@ -1,0 +1,17 @@
+body {
+    background-color: blanchedalmond;
+    font-family: Arial, sans-serif;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: #4B0082;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1em;
+}
+
+nav button:hover {
+    text-decoration: underline;
+}

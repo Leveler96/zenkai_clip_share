@@ -1,13 +1,20 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+from clips.views import user_clips
 from .forms import UserRegistrationForm, ProfileUpdateForm, UserUpdateForm
+from clips.models import Clip
 
 
 # Create views here.
 @login_required  # decorator that ensures that logged-in users can access this view
 def dashboard(request):
+    user_clips = Clip.objects.filter(uploader=request.user).order_by('-date_uploaded')
+    context = {
+        'clips': user_clips
+    }
     # user object is available in the template automatically if users can access this view
-    return render(request, 'users/dashboard.html')
+    return render(request, 'users/dashboard.html', context)
 
 
 def register(request):

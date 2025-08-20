@@ -4,9 +4,8 @@ import ffmpeg
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import os
-
+from django.conf import settings
 from ffmpeg import output, overwrite_output
-
 from .models import Clip
 
 
@@ -14,16 +13,17 @@ from .models import Clip
 def transcode_video(sender, instance, created, **kwargs):
     # only transcode when a new object is created and has a raw video file
     if created and instance.video_file:
+        converted_dir_relative = 'clips/converted'
+        converted_dir_path = os.path.join(settings.MEDIA_ROOT, converted_dir_relative)
+        os.makedirs(converted_dir_path, exist_ok=True)
         # get the path for the converted video file
-        raw_file_path = instance.video_file.path
-
-        # path for converted video file
-        converted_dir = os.path.join(os.path.dirname(raw_file_path), 'converted')
-        os.makedirs(converted_dir, exist_ok=True)
+        raw_file_path = os.path.join(settings.MEDIA_ROOT, instance.video_file.name)
 
         # get filename and create output path
         filename = os.path.basename(raw_file_path)
-        output_file_path = os.path.join(converted_dir, f'converted_{filename}')
+        output_file_path = os.path.join(converted_dir_path, f'converted_{filename}')
+
+        converted_file_relative = os.path.join(converted_dir_relative, f'converted_{filename}')
 
         # use ffmpeg to transcode video
         try:
@@ -34,7 +34,7 @@ def transcode_video(sender, instance, created, **kwargs):
                 .run(overwrite_output=True, quiet=True)
             )
             # update clip object with the path to converted file
-            instance.converted_video_file.name = f'clips/converted/converted_{filename}'
+            instance.converted_video_file.name = converted_file_relative
             instance.save(update_fields=['converted_video_file'])
 
         except ffmpeg.Error as e:
